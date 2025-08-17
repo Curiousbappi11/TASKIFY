@@ -1,7 +1,7 @@
 {
     "name": "Taskify",
     "short_name": "Taskify ",
-    "start_url": "./",
+    "start_url": "/TASKIFY/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
