@@ -31,7 +31,7 @@ function TaskItems() {
         </div>
 
         {/* Text */}
-        <div className='pt-[3px] flex-1'>
+        <div className='pt-[3px] w-full'>
           <p className='w-full text-lg font-medium leading-5'>This is an example.
             {/* Lorem ipsum dolor sit amet consectetur. */}
           </p>
@@ -57,6 +57,7 @@ function TaskItems() {
         </div>
 
       </div>
+      
     </>
   )
 }
