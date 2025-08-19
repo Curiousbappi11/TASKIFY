@@ -4,7 +4,8 @@ function TaskItems() {
   return (
     <>
       {/* task box */}
-      <div className='border rounded-xl px-4 py-2.5 flex gap-2'>
+      <div className='border border-
+        rounded-xl px-4 py-2.5 flex gap-2'>
 
         {/* checkbox */}
         <div className='grid place-items-center h-6'>
@@ -14,6 +15,7 @@ function TaskItems() {
               size-4 
               appearance-none
               border
+              border-dashed
               rounded-sm
               checked:bg-[#444]
               checked:after:content-["⌋"]

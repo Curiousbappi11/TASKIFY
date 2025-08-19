@@ -1,17 +1,15 @@
-import { useState } from 'react'
 import Tasks from './Components/Tasks'
+import Menu from './Components/Menu';
+import { useStore } from './CustomHooks/ContextProvider';
 // import './App.css'
 
 function App() {
 
-  const [isMenuToggle, setIsMenuToggle] = useState(false);
-
-  function handleMenuToggle() {
-    setIsMenuToggle(!isMenuToggle);
-  }
+  const { isMenuToggle, setIsMenuToggle, handleMenuToggle } = useStore();
 
   return (
     <>
+
       {/* main container */}
       <div className='w-dvw h-dvh p-2 bg-[#d3d3d3] text-[#444] overflow-hidden'>
 
@@ -19,23 +17,10 @@ function App() {
         <div className='w-full h-full flex relative'>
 
           {/* navigation container */}
-          <div className={`p-4 ${isMenuToggle ? 'translate-x-0' : '-translate-x-full'} absolute transition-transform duration-300 grid place-content-center w-44 h-full`}>
-            home
-            <br />
-            tasks
-            <br />
-            notes
-            <br />
-            reminder
-            <br />
-            pomodoro
-            <br />
-            calender
-
-          </div>
+          <Menu isMenuToggle={isMenuToggle} />
 
           {/* home section */}
-          <div className={`${isMenuToggle ? 'scale-80 translate-x-44' : 'translate-x-0'} relative transition-transform duration-300 border rounded-[2rem] p-6 w-full h-full flex flex-col`}>
+          <div className={`${isMenuToggle ? 'scale-85 translate-x-56' : 'translate-x-0'} relative transition-transform duration-300 border rounded-[2rem] p-6 w-full h-full flex flex-col`}>
 
             {/* dark screen for exit */}
             {isMenuToggle && (
@@ -59,6 +44,7 @@ function App() {
           </div>
 
         </div>
+
 
       </div>
 
