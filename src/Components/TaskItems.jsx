@@ -1,42 +1,33 @@
 import React from 'react'
+import { useStore } from '../CustomHooks/ContextProvider'
 
 function TaskItems() {
+
+  const { isCheckboxToggle,  handleCheckboxToggle } = useStore();
+
   return (
     <>
       {/* task box */}
-      <div className='border border-
-        rounded-xl px-4 py-2.5 flex gap-2'>
+      <div className='border rounded-xl px-4 py-2.5 flex gap-2'>
 
         {/* checkbox */}
         <div className='grid place-items-center h-6'>
-          <input type="checkbox"
-            className='
-              inline-b 
-              size-4 
-              appearance-none
-              border
-              border-dashed
-              rounded-sm
-              checked:bg-[#444]
-              checked:after:content-["⌋"]
-              relative
-              after:rotate-[45deg]
-              after:absolute
-              after:top-[-4px]
-              after:left-[4px]
-              after:text-[13px]
-              after:font-black
-              after:text-[#fff]
-              '
-            // className='accent-[#444] size-4'
-          />
+          <button className='border border-dashed rounded-sm grid place-content-center w-5 h-5 hover:bg-[#ccc]' onClick={(e) => {e.preventDefault(); handleCheckboxToggle()}}>
+
+            {isCheckboxToggle && (
+              <div className='border bg-[#444] rounded-sm'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="#fff" className="size-[18px]">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+              </div>
+            )}
+
+          </button>
         </div>
 
         {/* Text */}
         <div className='pt-[3px] w-full'>
-          <p className='w-full text-lg font-medium leading-5'>This is an example.
-            {/* Lorem ipsum dolor sit amet consectetur. */}
-          </p>
+          <p className='w-full leading-5'>This is an example.</p>
         </div>
 
         {/* edit */}
@@ -59,7 +50,7 @@ function TaskItems() {
         </div>
 
       </div>
-      
+
     </>
   )
 }
