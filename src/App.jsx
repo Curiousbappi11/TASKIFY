@@ -1,6 +1,7 @@
 import Tasks from './Components/Tasks'
 import Menu from './Components/Menu';
 import { useStore } from './CustomHooks/ContextProvider';
+import { Outlet } from 'react-router';
 // import './App.css'
 
 function App() {
@@ -39,7 +40,8 @@ function App() {
 
             </div>
 
-            <Tasks />
+            {/* <Tasks /> */}
+            <Outlet />
 
           </div>
 
