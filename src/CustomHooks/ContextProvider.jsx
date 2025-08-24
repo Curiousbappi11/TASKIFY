@@ -1,30 +1,31 @@
-import React, { useContext, useState } from 'react'
-import { createContext } from "react";
+// import React, { useContext, useState } from 'react'
+// import { createContext } from "react";
 
-const StateContext = createContext();
+// const StateContext = createContext();
 
-function ContextProvider({children}) {
+// function ContextProvider({children}) {
 
-  const [isMenuToggle, setIsMenuToggle] = useState(false);
-  const [isCheckboxToggle, setIsCheckboxToggle] = useState(false);
+//   const [isMenuToggle, setIsMenuToggle] = useState(false);
+//   const [isCheckboxToggle, setIsCheckboxToggle] = useState(false);
+  
 
-  function handleMenuToggle() {
-    setIsMenuToggle(!isMenuToggle);
-  }
+//   function handleMenuToggle() {
+//     setIsMenuToggle(!isMenuToggle);
+//   }
 
-  function handleCheckboxToggle(e) {
-    setIsCheckboxToggle(!isCheckboxToggle);
-  }
+//   function handleCheckboxToggle() {
+//     setIsCheckboxToggle(!isCheckboxToggle);
+//   }
 
-  return (
-    <StateContext.Provider value={{isMenuToggle, setIsMenuToggle, handleMenuToggle, isCheckboxToggle, handleCheckboxToggle}}>
-      {children}
-    </StateContext.Provider>
-  )
-}
+//   return (
+//     <StateContext.Provider value={{isMenuToggle, setIsMenuToggle, handleMenuToggle, isCheckboxToggle, handleCheckboxToggle}}>
+//       {children}
+//     </StateContext.Provider>
+//   )
+// }
 
-export default ContextProvider
+// export default ContextProvider
 
-export function useStore() {
-  return useContext(StateContext);
-}
+// export function useStore() {
+//   return useContext(StateContext);
+// }

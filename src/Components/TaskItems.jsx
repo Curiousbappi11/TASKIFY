@@ -1,9 +1,15 @@
-import React from 'react'
-import { useStore } from '../CustomHooks/ContextProvider'
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { checkTask } from '../features/tasksSlice';
 
-function TaskItems() {
+function TaskItems({ task }) {
 
-  const { isCheckboxToggle,  handleCheckboxToggle } = useStore();
+  const dispatch = useDispatch();
+
+  const handleCheckboxToggle = (e) => {
+    e.preventDefault();
+    dispatch(checkTask(task.id));
+  }
 
   return (
     <>
@@ -11,23 +17,27 @@ function TaskItems() {
       <div className='border rounded-xl px-4 py-2.5 flex gap-2'>
 
         {/* checkbox */}
-        <div className='grid place-items-center h-6'>
-          <button className='border border-dashed rounded-sm grid place-content-center w-5 h-5 hover:bg-[#ccc]' onClick={(e) => {e.preventDefault(); handleCheckboxToggle()}}>
+        <div className='grid place-items-center w-6 h-6'>
+          <button onClick={handleCheckboxToggle}>
 
-            {isCheckboxToggle && (
-              <div className='border bg-[#444] rounded-sm'>
+            {task.completed ?
+              <div className='border border-dashed bg-[#444] rounded-sm'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="#fff" className="size-[18px]">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                 </svg>
               </div>
-            )}
+              :
+              <div className='border border-dashed rounded-sm grid place-content-center w-5 h-5 hover:bg-[#ccc]'></div>
+            }
 
           </button>
         </div>
 
         {/* Text */}
         <div className='pt-[3px] w-full'>
-          <p className='w-full leading-5'>This is an example.</p>
+          <p className='w-full leading-5'>
+            {task.text}
+          </p>
         </div>
 
         {/* edit */}

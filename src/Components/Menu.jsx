@@ -1,13 +1,17 @@
 import React from 'react'
-import { useStore } from '../CustomHooks/ContextProvider';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router";
-import { NavLink } from "react-router";
-
+import { MenuToggle } from '../features/uiSlice';
 function Menu() {
 
-  const { isMenuToggle, setIsMenuToggle, handleMenuToggle } = useStore();
-
   const navigate = useNavigate();
+
+  const isMenuToggle = useSelector((state) => state.ui.isMenuToggle);
+  const dispatch = useDispatch();
+
+  const handleMenuClick = () => {
+    dispatch(MenuToggle());
+  }
 
   return (
     <>
@@ -19,7 +23,7 @@ function Menu() {
         <div className='w-full flex justify-end'>
 
           {/* back */}
-          <button className='group border rounded-full hover:bg-[#bbb] hover:border-[#bbb] p-3.5 ' onClick={handleMenuToggle}>
+          <button className='group border rounded-full hover:bg-[#bbb] hover:border-[#bbb] p-3.5 ' onClick={handleMenuClick}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="size-4 group-hover:scale-170 group-hover:stroke-1 group-hover:-translate-x-0.5 transition-transform">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>

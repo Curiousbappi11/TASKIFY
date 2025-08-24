@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TaskItems from './TaskItems'
+import { useSelector, useDispatch } from 'react-redux'
+import { addTask } from '../features/tasksSlice'
 
 function Tasks() {
+
+  const taskList = useSelector((state) => state.tasks.taskList);
+  const dispatch = useDispatch();
+  
+  const [text, setText] = useState('')
+
+  const handleAddTask = (e) => {
+    e.preventDefault();
+    if (text.trim() === '') return; // Prevent adding empty tasks
+      dispatch(addTask(text));
+    setText(''); // Clear input field after adding task
+  }
+  
   return (
     <>
 
@@ -21,10 +36,10 @@ function Tasks() {
             <div className='flex gap-4 mb-6'>
 
               {/* input field */}
-              <input type="text" name="" id="" placeholder='Add new task' className='border-b-1 px-1 w-full outline-none' />
+              <input type="text" name="" id="" placeholder='Add new task' className='border-b-1 px-1 w-full outline-none' value={text} onChange={(e) => setText(e.target.value)}/>
 
               {/* create button */}
-              <button className='bg-[#444] p-1 rounded-lg hover:bg-[#111]' onClick={{}}>
+              <button className='bg-[#444] p-1 rounded-lg hover:bg-[#111]' onClick={handleAddTask}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#fff" className="size-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -34,18 +49,14 @@ function Tasks() {
 
             {/* All Tasks items */}
             <div className='h-[18rem] overflow-y-scroll flex flex-col gap-3 snap-y snap-mandatory hide-scrollbar'>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
-              <div className='snap-start'><TaskItems /></div>
+              {/* <div className='snap-start'><TaskItems /></div> */}
+
+              {taskList.map((task) => (
+                <div key={task.id} className='snap-start'>
+                  <TaskItems task={task} />
+                </div>
+              ))}
+                            
             </div>
 
           </form>
