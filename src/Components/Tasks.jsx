@@ -39,7 +39,7 @@ function Tasks() {
               <input type="text" name="" id="" placeholder='Add new task' className='border-b-1 px-1 w-full outline-none' value={text} onChange={(e) => setText(e.target.value)}/>
 
               {/* create button */}
-              <button className='bg-[#444] p-1 rounded-lg hover:bg-[#111]' onClick={handleAddTask}>
+              <button type='submit' className='bg-[#444] p-1 rounded-lg hover:bg-[#111]' onClick={handleAddTask}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#fff" className="size-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
