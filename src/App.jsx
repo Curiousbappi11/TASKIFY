@@ -18,7 +18,7 @@ function App() {
     <>
 
       {/* main container */}
-      <div className='w-dvw h-dvh p-2 bg-[#d3d3d3] text-[#444] overflow-hidden'>
+      <div className='w-dvw h-dvh p-2 bg-[#3a3a3a] text-[#afafaf] overflow-hidden'>
 
         {/* content container */}
         <div className='w-full h-full flex relative'>

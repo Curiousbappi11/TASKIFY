@@ -16,12 +16,25 @@ const tasksSlice = createSlice({
         completed: false,
       });
     },
-    
+
     checkTask: (state, action) => {
-      const task = state.taskList.find(task => task.id === action.payload);
+      const task = state.taskList.find(t => t.id === action.payload);
       if (task) {
         task.completed = !task.completed;
       }
+    },
+
+    editTask: (state, action) => {
+      const { id, newText, completed } = action.payload;
+      const task = state.taskList.find(t => t.id === id);
+      if (task) {
+        task.text = newText;
+        task.completed = completed;
+      }
+    },
+
+    deleteTask: (state, action) => {
+      state.taskList = state.taskList.filter(t => t.id !== action.payload);
     },
     
   }
@@ -30,5 +43,7 @@ const tasksSlice = createSlice({
 export const {
   addTask,
   checkTask,
+  editTask,
+  deleteTask,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;
