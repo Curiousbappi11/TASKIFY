@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import Tasks from './Components/Tasks.jsx'
+import Notes from './Components/Notes.jsx'
 import Home from './Components/Home.jsx'
 import { store } from './store/store.js'
 import { Provider } from 'react-redux'
@@ -20,8 +21,12 @@ const router = createBrowserRouter([
         Component: Home
       },
       {
-        path: "tasks",
+        path: 'tasks',
         Component: Tasks
+      },
+      {
+        path: 'notes',
+        Component: Notes
       },
     ],
   },

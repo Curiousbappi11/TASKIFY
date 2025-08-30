@@ -27,7 +27,7 @@ function App() {
           <Menu />
 
           {/* home section */}
-          <div className={`${isMenuToggle ? 'scale-85 translate-x-56' : 'translate-x-0'} relative transition-transform duration-300 border rounded-[2rem] p-6 w-full h-full flex flex-col`}>
+          <div className={`${isMenuToggle ? 'scale-85 translate-x-56' : 'translate-x-0'} relative transition-transform duration-300 border rounded-[2rem] px-6 py-4 w-full h-full flex flex-col`}>
 
             {/* dark screen for exit */}
             {isMenuToggle && (
@@ -35,7 +35,7 @@ function App() {
             )}
 
             {/* nav bar container */}
-            <div className='w-full h-16 flex items-center'>
+            <div className='mb-2 w-full h-12 flex items-center'>
 
               {/* menu */}
               <button type='button' onClick={handleMenuClick}>
@@ -46,8 +46,11 @@ function App() {
 
             </div>
 
-            {/* <Tasks /> */}
-            <Outlet />
+            <div className=' w-full h-full grid place-content-center overflow-hidden'>
+
+              {/* <Tasks /> */}
+              <Outlet />
+            </div>
 
           </div>
 

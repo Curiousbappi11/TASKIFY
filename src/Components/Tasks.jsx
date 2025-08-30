@@ -21,13 +21,10 @@ function Tasks() {
     <>
 
       {/* main container of Tasks */}
-      <div className=' w-full h-full grid place-content-center'>
-
-        {/* inner box for alignment */}
-        <div className='w-full'>
+        <div className='w-full grid place-content-center'>
 
           {/* heading */}
-          <h1 className='font-black text-3xl mb-4'>Your To Do</h1>
+          <h2 className='font-black text-3xl mb-4'>Your To Do</h2>
 
           {/* form box */}
           <form action="">
@@ -48,7 +45,7 @@ function Tasks() {
             </div>
 
             {/* All Tasks items */}
-            <div className='h-[18rem] overflow-y-scroll flex flex-col gap-3 snap-y snap-mandatory hide-scrollbar'>
+            <div className='h-[19rem] overflow-y-scroll flex flex-col gap-3 snap-y snap-mandatory hide-scrollbar'>
               {/* <div className='snap-start'><TaskItems /></div> */}
 
               {taskList.map((task) => (
@@ -69,8 +66,6 @@ function Tasks() {
 
         </div>
 
-      </div>
-      
     </>
   )
 }
