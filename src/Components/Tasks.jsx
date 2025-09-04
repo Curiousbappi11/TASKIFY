@@ -21,7 +21,7 @@ function Tasks() {
     <>
 
       {/* main container of Tasks */}
-        <div className='w-full grid place-content-center'>
+        <div className='w-full h-full grid place-content-center'>
 
           {/* heading */}
           <h2 className='font-black text-3xl mb-4'>Your To Do</h2>

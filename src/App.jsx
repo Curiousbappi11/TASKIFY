@@ -1,4 +1,3 @@
-import Tasks from './Components/Tasks'
 import Menu from './Components/Menu';
 import { useSelector, useDispatch } from 'react-redux';
 import { MenuToggle } from './features/uiSlice';
@@ -46,7 +45,8 @@ function App() {
 
             </div>
 
-            <div className=' w-full h-full grid place-content-center overflow-hidden'>
+            <div className='
+            w-full h-full overflow-hidden'>
 
               {/* <Tasks /> */}
               <Outlet />
