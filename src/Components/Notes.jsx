@@ -53,8 +53,8 @@ function Notes() {
                   {/* save button */}
                   <button type='button' onClick={handleSaveNotes} className='bg-[#444] text-[#d3d3d3] text-sm px-4 py-2 rounded-lg hover:bg-[#111] transition-colors duration-300 ease-in-out'>Save</button>
                 </div>
-                <textarea placeholder='Title' value={notesTitle} onChange={(e) => {setNotesTitle(e.target.value)}} className='resize-none overflow-y-scroll hide-scrollbar w-full h-10 text-4xl font-extrabold outline-none mb-2' />
-                <textarea value={notesContent} onChange={(e) => {setNotesContent(e.target.value)}} className='w-full h-full mt-2 rounded-lg resize-none outline-none overflow-y-scroll hide-scrollbar' placeholder='Write your note here...' />
+                <textarea placeholder='Title' value={notesTitle} onChange={(e) => { setNotesTitle(e.target.value) }} className='resize-none overflow-y-scroll hide-scrollbar w-full h-10 text-4xl font-extrabold outline-none mb-2' />
+                <textarea value={notesContent} onChange={(e) => { setNotesContent(e.target.value) }} className='w-full h-full mt-2 rounded-lg resize-none outline-none overflow-y-scroll hide-scrollbar' placeholder='Write your note here...' />
               </div>
             ) : (
               <>
@@ -67,15 +67,17 @@ function Notes() {
                 </button>
 
                 {/* cards container*/}
-                <div className='flex flex-col gap-4 overflow-y-scroll hide-scrollbar [&>div]:h-34'>
+                <div className='w-full h-full flex flex-col gap-4 overflow-y-scroll hide-scrollbar'>
 
                   {/* notes cards */}
                   {
                     allNotes.length === 0 ? (
                       <p className='text-center text-[#444] font-bold text-2xl mt-20'>No Notes Available</p>
-                    ) :(
-                      allNotes.map((note) => (
-                        <NoteCards key={note.id} title={note.title} content={note.content} dateTime={note.dateTime} />
+                    ) : (
+                      [...allNotes].reverse().map((note) => (
+                        <button className='border text-left cursor-pointer rounded-2xl'>
+                          <NoteCards key={note.id} title={note.title} content={note.content} dateTime={note.dateTime} />
+                        </button>
                       ))
                     )
                   }

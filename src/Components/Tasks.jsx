@@ -48,7 +48,7 @@ function Tasks() {
             <div className='h-[19rem] overflow-y-scroll flex flex-col gap-3 snap-y snap-mandatory hide-scrollbar'>
               {/* <div className='snap-start'><TaskItems /></div> */}
 
-              {taskList.map((task) => (
+              {[...taskList].reverse().map((task) => (
                 <div key={task.id} className='snap-start'>
                   <TaskItems task={task} />
                 </div>

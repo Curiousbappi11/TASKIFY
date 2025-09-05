@@ -7,12 +7,12 @@ function NoteCards({
 }) {
   return (
     <>
-      <div className='border rounded-2xl px-4 py-2 flex flex-col'>
-
+      <div className='h-34 rounded-2xl px-4 pt-2 pb-1 flex flex-col'>
+        
         <h3 className='font-bold text-2xl'>{title}</h3>
-        <p className='italic'>{content}</p>
-        <div className='h-full flex items-end justify-end'>
-          <p>{dateTime}</p>
+        <p className='italic whitespace-pre-wrap overflow-hidden'>{content}</p>
+        <div className='mt-auto flex items-end justify-end'>
+          <p className='text-sm'>{dateTime}</p>
         </div>
 
       </div>
