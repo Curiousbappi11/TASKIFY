@@ -10,6 +10,7 @@ html {
 }
 
 body {
+  background: #d3d3d3;
   font-family: 'Poppins', sans-serif;
   overscroll-behavior-y: contain;
   height: 100%;
