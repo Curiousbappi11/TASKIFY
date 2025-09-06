@@ -53,7 +53,7 @@ function Notes() {
                   {/* save button */}
                   <button type='button' onClick={handleSaveNotes} className='bg-[#444] text-[#d3d3d3] text-sm px-4 py-2 rounded-lg hover:bg-[#111] transition-colors duration-300 ease-in-out'>Save</button>
                 </div>
-                <textarea placeholder='Title' value={notesTitle} onChange={(e) => { setNotesTitle(e.target.value) }} className='resize-none overflow-y-scroll hide-scrollbar w-full h-10 text-4xl font-extrabold outline-none mb-2' />
+                <textarea placeholder='Title' value={notesTitle} onChange={(e) => { setNotesTitle(e.target.value) }} className='resize-none overflow-y-scroll hide-scrollbar w-full h-12 text-4xl font-extrabold outline-none mb-2' />
                 <textarea value={notesContent} onChange={(e) => { setNotesContent(e.target.value) }} className='w-full h-full mt-2 rounded-lg resize-none outline-none overflow-y-scroll hide-scrollbar' placeholder='Write your note here...' />
               </div>
             ) : (
