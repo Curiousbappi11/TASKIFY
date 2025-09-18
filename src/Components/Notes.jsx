@@ -1,36 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NoteCards from './NoteCards'
 import { useSelector, useDispatch } from 'react-redux'
-import { addNotesToggle } from '../features/notesSlice';
+import { NotesFormToggle } from '../features/notesSlice';
 import { saveNotes } from '../features/notesSlice';
+import { deleteNote } from '../features/notesSlice';
+import NoteForm from './NoteForm';
 
 function Notes() {
 
-  const isAddNotesToggle = useSelector((state) => state.notes.isAddNotesToggle);
+  const isNotesFormToggle = useSelector((state) => state.notes.isNotesFormToggle);
   const allNotes = useSelector((state) => state.notes.allNotes);
 
   const dispatch = useDispatch();
 
-  const [notesTitle, setNotesTitle] = useState('');
-  const [notesContent, setNotesContent] = useState('');
+  const [selectedNotes, setSelectedNotes] = useState('')
 
-  const note = {
-    title: notesTitle,
-    content: notesContent,
-    dateTime: new Date().toLocaleString(),
+  const handleNotesFormToggle = () => {
+    dispatch(NotesFormToggle());
   }
 
-  const handleAddNotesToggle = () => {
-    dispatch(addNotesToggle());
+  const handleCardClick = (note) => {
+    console.log("Note clicked:", note);
+    setSelectedNotes(note);
+    handleNotesFormToggle();
   }
 
-  const handleSaveNotes = () => {
-    if (notesTitle.trim() === '' || notesContent.trim() === '') return;
-    dispatch(saveNotes(note));
-    dispatch(addNotesToggle());
-    setNotesTitle('');
-    setNotesContent('');
-  }
+  const handleDeleteNotes = (e, note) => {
+    e.stopPropagation();
+    dispatch(deleteNote(note.id));
+  };
+
 
   return (
     <>
@@ -40,29 +39,16 @@ function Notes() {
 
         <div className='max-w-[40rem] min-w-[10rem] w-full h-full flex flex-col overflow-hidden' >
 
-          {isAddNotesToggle ?
+          {isNotesFormToggle ?
             (
-              <div className='mb-2 h-full'>
-                <div className='flex gap-2 mb-4'>
-                  <div className='flex items-center w-full'>
-                    <h3 className='font-extrabold
-                     text-xl'>Add New Note</h3>
-                  </div>
-                  {/* back button */}
-                  <button type='button' onClick={handleAddNotesToggle} className='bg-[#444] text-[#d3d3d3] text-sm px-3 py-1 rounded-lg hover:bg-[#111] transition-colors duration-300 ease-in-out'>Back</button>
-                  {/* save button */}
-                  <button type='button' onClick={handleSaveNotes} className='bg-[#444] text-[#d3d3d3] text-sm px-4 py-2 rounded-lg hover:bg-[#111] transition-colors duration-300 ease-in-out'>Save</button>
-                </div>
-                <textarea placeholder='Title' value={notesTitle} onChange={(e) => { setNotesTitle(e.target.value) }} className='resize-none overflow-y-scroll hide-scrollbar w-full h-12 text-4xl font-extrabold outline-none mb-2' />
-                <textarea value={notesContent} onChange={(e) => { setNotesContent(e.target.value) }} className='w-full h-full mt-2 rounded-lg resize-none outline-none overflow-y-scroll hide-scrollbar' placeholder='Write your note here...' />
-              </div>
+              <NoteForm selectedNotes={selectedNotes} setSelectedNotes={setSelectedNotes} />
             ) : (
               <>
                 {/* heading */}
                 <h2 className='font-black text-4xl mt-2 mb-4'>All Notes</h2>
 
                 {/* add notes button */}
-                <button className='border-2 border-dashed rounded-2xl mb-4 px-4 py-2 font-bold text-2xl text-[#444] hover:border-[#111] hover:text-[#111] transition-all duration-300 ease-in-out' onClick={handleAddNotesToggle}>
+                <button className='border-2 border-dashed rounded-2xl mb-4 px-4 py-2 font-bold text-2xl text-[#444] hover:border-[#111] hover:text-[#111] transition-all duration-300 ease-in-out' onClick={handleNotesFormToggle}>
                   + Add Notes
                 </button>
 
@@ -72,12 +58,12 @@ function Notes() {
                   {/* notes cards */}
                   {
                     allNotes.length === 0 ? (
-                      <p className='text-center text-[#444] font-bold text-2xl mt-20'>No Notes Available</p>
+                      <p className='text-center text-[#444] font-bold text-2xl mt-50'>No Notes Available</p>
                     ) : (
                       [...allNotes].reverse().map((note) => (
-                        <button className='border text-left cursor-pointer rounded-2xl'>
-                          <NoteCards key={note.id} title={note.title} content={note.content} dateTime={note.dateTime} />
-                        </button>
+                        <div key={note.id} onClick={() => { handleCardClick(note) }} className='border text-left cursor-pointer rounded-2xl'>
+                          <NoteCards key={note.id} title={note.title} content={note.content} dateTime={note.dateTime} note={note} handleDeleteNotes={handleDeleteNotes} />
+                        </div>
                       ))
                     )
                   }

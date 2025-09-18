@@ -3,12 +3,13 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
-import Tasks from './Components/Tasks.jsx'
-import Notes from './Components/Notes.jsx'
-import Home from './Components/Home.jsx'
 import { store } from './store/store.js'
 import { Provider } from 'react-redux'
 import ErrorPage from './Components/ErrorPage.jsx'
+import Home from './Components/Home.jsx'
+import Tasks from './Components/Tasks.jsx'
+import Notes from './Components/Notes.jsx'
+import Reminders from './Components/Reminders.jsx'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
         path: 'notes',
         Component: Notes
       },
+      {
+        path: 'reminders',
+        Component: Reminders
+      }
     ],
   },
 ],

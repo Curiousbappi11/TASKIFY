@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isAddNotesToggle: false,
+  isNotesFormToggle: false,
   allNotes: [],
 }
 
@@ -10,8 +10,8 @@ const notesSlice = createSlice({
   initialState,
   reducers: {
 
-    addNotesToggle: (state) => {
-      state.isAddNotesToggle = !state.isAddNotesToggle;
+    NotesFormToggle: (state) => {
+      state.isNotesFormToggle = !state.isNotesFormToggle;
     },
 
     saveNotes: (state, action) => {
@@ -20,11 +20,26 @@ const notesSlice = createSlice({
         ...action.payload});
     },
 
+    updateNote: (state, action) => {
+      const index = state.allNotes.findIndex(note => note.id === action.payload.id);
+      if (index !== -1) {
+        state.allNotes[index] = action.payload;
+      }
+    },
+
+    deleteNote: (state, action) => {
+      state.allNotes = state.allNotes.filter(
+        note => note.id !== action.payload
+      );
+    },
+
   }
 })
 
 export const {
-  addNotesToggle,
+  NotesFormToggle,
   saveNotes,
+  updateNote,
+  deleteNote,
 } = notesSlice.actions;
 export default notesSlice.reducer;
