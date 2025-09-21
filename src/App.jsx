@@ -1,4 +1,6 @@
 import Menu from './Components/Menu';
+import ReminderHandler from "./Components/ReminderHandler";
+import ReminderPopup from "./Components/ReminderPopup";
 import { useSelector, useDispatch } from 'react-redux';
 import { MenuToggle } from './features/uiSlice';
 import { Outlet } from 'react-router';
@@ -16,6 +18,9 @@ function App() {
   return (
     <>
 
+      <ReminderHandler /> {/* This will always run */}
+      <ReminderPopup />   {/* This shows popup when reminder triggers */}
+
       {/* main container */}
       <div className='w-dvw h-dvh p-2 bg-[#d3d3d3] text-[#444] overflow-hidden'>
 
@@ -30,7 +35,7 @@ function App() {
 
             {/* dark screen for exit */}
             {isMenuToggle && (
-              <div className=' absolute inset-0 z-10' onClick={handleMenuClick}></div>
+              <div className='rounded-4xl absolute inset-0 z-10' onClick={handleMenuClick}></div>
             )}
 
             {/* nav bar container */}
