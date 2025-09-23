@@ -10,6 +10,8 @@ import Home from './Components/Home.jsx'
 import Tasks from './Components/Tasks.jsx'
 import Notes from './Components/Notes.jsx'
 import Reminders from './Components/Reminders.jsx'
+import Pomodoro from './Components/Pomodoro.jsx'
+import Calendar from './Components/Calendar.jsx'
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,15 @@ const router = createBrowserRouter([
       {
         path: 'reminders',
         Component: Reminders
-      }
+      },
+      {
+        path: 'pomodoro',
+        Component: Pomodoro
+      },
+      {
+        path: 'calendar',
+        Component: Calendar
+      },
     ],
   },
 ],

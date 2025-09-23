@@ -50,12 +50,10 @@ function App() {
 
             </div>
 
-            <div className='
-            w-full h-full overflow-hidden'>
-
-              {/* <Tasks /> */}
+            <div className="w-full h-full overflow-y-auto hide-scrollbar">
               <Outlet />
             </div>
+
 
           </div>
 
