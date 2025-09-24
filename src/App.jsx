@@ -4,6 +4,7 @@ import ReminderPopup from "./Components/ReminderPopup";
 import { useSelector, useDispatch } from 'react-redux';
 import { MenuToggle } from './features/uiSlice';
 import { Outlet } from 'react-router';
+import GoogleAuth from './Components/GoogleAuth';
 // import './App.css'
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
             )}
 
             {/* nav bar container */}
-            <div className='mb-2 w-full h-12 flex items-center'>
+            <div className='mb-2 w-full h-12 flex justify-between items-center'>
 
               {/* menu */}
               <button type='button' onClick={handleMenuClick}>
@@ -47,6 +48,16 @@ function App() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
               </button>
+
+              <button
+                type='button'
+                onClick={() => window.location.href = '/'}
+                className='px-18 py-1 border border-[#333] text-[#333] font-extrabold text-2xl rounded-lg hover:text-[#4a1aa2] hover:bg-[#e5cfe2] transition-colors'
+              >
+                Taskify
+              </button>
+
+              <GoogleAuth />
 
             </div>
 

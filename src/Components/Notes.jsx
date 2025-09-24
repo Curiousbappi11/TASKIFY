@@ -5,6 +5,9 @@ import { NotesFormToggle } from '../features/notesSlice';
 import { saveNotes } from '../features/notesSlice';
 import { deleteNote } from '../features/notesSlice';
 import NoteForm from './NoteForm';
+import { fetchNotes } from '../features/notesSlice';
+
+
 
 function Notes() {
 
@@ -12,9 +15,13 @@ function Notes() {
   const allNotes = useSelector((state) => state.notes.allNotes);
 
   const dispatch = useDispatch();
-
+  
   const [selectedNotes, setSelectedNotes] = useState('')
-
+  
+  useEffect(() => {
+    dispatch(fetchNotes());
+  }, [dispatch]);
+  
   const handleNotesFormToggle = () => {
     dispatch(NotesFormToggle());
   }

@@ -18,7 +18,7 @@ export default function ReminderPopup() {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black/40 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center gap-4">
+      <div className="px-20 py-10 bg-white p-6 rounded-lg shadow-lg flex flex-col items-center gap-4">
         <h2 className="text-xl font-bold">{activeReminder.title}</h2>
         <button 
           onClick={handleStop} 

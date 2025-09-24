@@ -1,68 +1,55 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  startStop,
+  reset,
+  tick,
+  complete,
+  stopAlarmAndContinue,
+  setCustomWork,
+  setCustomBreak,
+  apply,
+} from "../features/pomodoroSlice";
 import PlaylistPlayer from "./PlaylistPlayer";
 
 function Pomodoro() {
-  const [time, setTime] = useState(25 * 60);
-  const [isRunning, setIsRunning] = useState(false);
-  const [isWork, setIsWork] = useState(true);
-  const [customWork, setCustomWork] = useState('25');
-  const [customBreak, setCustomBreak] = useState('5');
-  const [resetTrigger, setResetTrigger] = useState(false);
-
-  const [showPopup, setShowPopup] = useState(false);
+  const dispatch = useDispatch();
+  const {
+    time,
+    isRunning,
+    isWork,
+    customWork,
+    customBreak,
+    resetTrigger,
+    showPopup,
+  } = useSelector((state) => state.pomodoro);
 
   const audioRef = useRef(new Audio("/TASKIFY/reminderTone.mp3"));
+  const [userInteracted, setUserInteracted] = useState(false);
 
-  // Timer countdown
   useEffect(() => {
     let timer;
     if (isRunning && time > 0) {
-      timer = setInterval(() => setTime((prev) => prev - 1), 1000);
+      timer = setInterval(() => dispatch(tick()), 1000);
     } else if (isRunning && time === 0) {
-      handleComplete();
+      dispatch(complete());
     }
     return () => clearInterval(timer);
-  }, [isRunning, time]);
+  }, [isRunning, time, dispatch]);
 
-  const handleComplete = () => {
-    // 🔔 Play alarm
-    audioRef.current.currentTime = 0;
-    audioRef.current.loop = true;
-    audioRef.current.play().catch(() => { });
-
-    setShowPopup(true);     // Show popup
-    setIsRunning(false);    // ⛔ Pause timer
-  };
+  useEffect(() => {
+    if (showPopup && userInteracted) {
+      const audio = audioRef.current;
+      audio.currentTime = 0;
+      audio.loop = true;
+      audio.play().catch(() => console.log("Autoplay blocked"));
+    }
+  }, [showPopup, userInteracted]);
 
   const handleStopAlarm = () => {
-    // Stop ringtone
     audioRef.current.pause();
     audioRef.current.currentTime = 0;
-
-    setShowPopup(false);
-
-    // ✅ Now switch mode only when popup is closed
-    if (isWork) {
-      setTime(customBreak * 60);
-    } else {
-      setTime(customWork * 60);
-    }
-    setIsWork(!isWork);
-    setIsRunning(true); // Auto-start next session
-  };
-
-  const handleStartStop = () => {
-    setIsRunning(!isRunning);
-  };
-
-  const handleReset = () => {
-    setIsRunning(false);
-    setTime(customWork * 60);
-    setIsWork(true);
-    setShowPopup(false);
-    audioRef.current.pause();
-    audioRef.current.currentTime = 0;
-    setResetTrigger((prev) => prev + 1); // Trigger reset in PlaylistPlayer
+    dispatch(stopAlarmAndContinue());
   };
 
   const formatTime = (sec) => {
@@ -72,107 +59,100 @@ function Pomodoro() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 p-6">
-      <h2 className="text-3xl font-bold">
+    <div className="flex flex-col items-center gap-6 p-6 bg-gradient-to-b">
+      {/* Session Badge */}
+      <div className={`px-4 py-1 rounded-full text-white font-bold ${isWork ? "bg-red-500" : "bg-green-500"} ${isRunning ? "animate-pulse ":""}`}>
         {isWork ? "Work Session" : "Break Time"}
-      </h2>
+      </div>
 
-      <div className="text-6xl font-mono">{formatTime(time)}</div>
+      {/* Timer */}
+      <div className={`text-8xl text-purple-600 font-extrabold ${isRunning ? "font-extrabold text-purple-600" : "text-gray-700"}`}>
+        {formatTime(time)}
+      </div>
 
+      {/* Start / Pause / Reset Buttons */}
       <div className="flex gap-4">
         <button
-          onClick={handleStartStop}
-          className="bg-blue-500 w-20 text-white px-4 py-2 rounded"
+          onClick={() => {
+            dispatch(startStop());
+            setUserInteracted(true);
+          }}
+          className={`w-30 px-6 py-3 rounded-full text-white font-bold transition-transform transform hover:scale-105 ${isRunning ? "bg-pink-500 hover:bg-rose-500" : "bg-blue-500 hover:bg-blue-600"}`}
         >
           {isRunning ? "Pause" : "Start"}
         </button>
         <button
-          onClick={handleReset}
-          className="bg-gray-500 text-white px-4 py-2 rounded"
+          onClick={() => {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+            dispatch(reset());
+          }}
+          className="w-30 bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-full font-bold transition-colors"
         >
           Reset
         </button>
       </div>
 
-      <div className="flex gap-4 mt-4 items-end">
-  {/* Work Timer */}
-  <div className="flex flex-col items-center">
-    <label className="block text-[0.7rem]">Work (min)</label>
-    <input
-      type="number"
-      min="0"
-      value={customWork}
-      onChange={(e) => setCustomWork(e.target.value)}
-      onBlur={() => {
-        if (customWork === "" || isNaN(customWork)) setCustomWork("0");
-      }}
-      className="border px-2 py-1 rounded w-20 text-center"
-    />
-  </div>
+      {/* Custom Work / Break Inputs */}
+      <div className="flex gap-6 mt-4 items-end">
+        {/* Work */}
+        <div className="flex flex-col items-center">
+          <label className="block text-sm font-semibold mb-1">Work (min)</label>
+          <input
+            type="number"
+            min="0"
+            value={customWork}
+            onChange={(e) => dispatch(setCustomWork(e.target.value))}
+            onBlur={() => {
+              if (customWork === "" || isNaN(customWork)) dispatch(setCustomWork("0"));
+            }}
+            className="border-2 border-purple-400 focus:border-purple-600 focus:ring-1 focus:ring-purple-300 rounded-lg px-3 py-1 w-24 text-center font-semibold"
+          />
+        </div>
 
-  {/* Break Timer */}
-  <div className="flex flex-col items-center">
-    <label className="block text-[0.7rem]">Break (min)</label>
-    <input
-      type="number"
-      min="0"
-      value={customBreak}
-      onChange={(e) => setCustomBreak(e.target.value)}
-      onBlur={() => {
-        if (customBreak === "" || isNaN(customBreak)) setCustomBreak("0");
-      }}
-      className="border px-2 py-1 rounded w-20 text-center"
-    />
-  </div>
+        {/* Break */}
+        <div className="flex flex-col items-center">
+          <label className="block text-sm font-semibold mb-1">Break (min)</label>
+          <input
+            type="number"
+            min="0"
+            value={customBreak}
+            onChange={(e) => dispatch(setCustomBreak(e.target.value))}
+            onBlur={() => {
+              if (customBreak === "" || isNaN(customBreak)) dispatch(setCustomBreak("0"));
+            }}
+            className="border-2 border-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-300 rounded-lg px-3 py-1 w-24 text-center font-semibold"
+          />
+        </div>
 
-  {/* Apply Button */}
-  <button
-    onClick={() => {
-      const work = Number(customWork) || 0;
-      setTime(work * 60);
-      setIsWork(true);
-      handleReset();
-    }}
-    className="bg-green-600 text-white px-4 py-2 rounded self-end"
-  >
-    Apply
-  </button>
-</div>
+        {/* Apply */}
+        <button
+          onClick={() => dispatch(apply())}
+          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-full font-bold transition-all"
+        >
+          Apply
+        </button>
+      </div>
 
-
-
-
-      {/* <iframe
-        src="https://audiomack.com//embed/rodyeon/song/nonsense"
-        scrolling="no"
-        width="100%"
-        height="400"
-        frameborder="0"
-        allow="autoplay">
-      </iframe> */}
-
+      {/* Playlist Player */}
       <PlaylistPlayer isRunning={isRunning} resetTrigger={resetTrigger} />
 
-      {/* 🔔 Popup */}
-      {
-        showPopup && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-            <div className="bg-white rounded-xl shadow-lg p-6 w-80 text-center">
-              <h3 className="text-xl font-bold mb-2">
-                {isWork ? "Work session finished!" : "Break over!"}
-              </h3>
-              <p className="mb-4">Time’s up! ⏰</p>
-              <button
-                onClick={handleStopAlarm}
-                className="bg-red-500 text-white px-4 py-2 rounded"
-              >
-                Stop Alarm & Continue
-              </button>
-            </div>
+      {/* Popup */}
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 w-80 text-center animate-fadeIn">
+            <h3 className="text-2xl font-bold mb-2">{isWork ? "Work session finished!" : "Break over!"}</h3>
+            <p className="mb-4 text-gray-700">Time's up! ⏰</p>
+            <button
+              onClick={handleStopAlarm}
+              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-bold transition-colors"
+            >
+              Stop Alarm & Continue
+            </button>
           </div>
-        )
-      }
-    </div >
+        </div>
+      )}
+    </div>
   );
 }
 

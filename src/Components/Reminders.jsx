@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addReminder, updateReminder, deleteReminder } from "../features/remindersSlice";
+import { addReminder, updateReminder, deleteReminder, fetchReminders } from "../features/remindersSlice";
 
 function Reminders() {
   const dispatch = useDispatch();
@@ -17,6 +17,14 @@ function Reminders() {
   const [activeReminder, setActiveReminder] = useState(null);
   const audioRef = useRef(new Audio("/TASKIFY/reminderTone.mp3"));
 
+  useEffect(() => {
+    localStorage.setItem("reminders", JSON.stringify(allReminders));
+  }, [allReminders]);
+
+  useEffect(() => {
+    dispatch(fetchReminders());
+  }, [dispatch]);
+
   // Check reminders every second
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,7 +36,7 @@ function Reminders() {
           // Trigger popup and audio
           setActiveReminder(reminder);
           audioRef.current.currentTime = 0;
-          audioRef.current.play().catch(() => {});
+          audioRef.current.play().catch(() => { });
 
           // Mark reminder as triggered
           dispatch(updateReminder({ ...reminder, triggered: true }));
