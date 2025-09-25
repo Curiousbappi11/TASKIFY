@@ -29,39 +29,39 @@ const Home = () => {
         <div className="grid grid-cols-2 gap-4">
           <Link
             to="/tasks"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all"
+            className="border border-[#888] flex items-center justify-center gap-2 rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all"
           >
             <FaTasks size={20} /> Tasks
           </Link>
           <Link
             to="/notes"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-white rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all"
+            className="border border-[#888] flex items-center justify-center gap-2 rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all"
           >
             <FaStickyNote size={20} /> Notes
           </Link>
           <Link
             to="/reminders"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-white rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all"
+            className="border border-[#888] flex items-center justify-center gap-2 rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all"
           >
             <FaBell size={20} /> Reminders
           </Link>
           <Link
             to="/pomodoro"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all"
+            className="border border-[#888] flex items-center justify-center gap-2 rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all"
           >
             <FaClock size={20} /> Pomodoro
           </Link>
           <Link
             to="/calendar"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all col-span-2"
+            className="border border-[#888] flex items-center justify-center gap-2 rounded-2xl py-4 font-semibold shadow-lg hover:scale-105 transform transition-all col-span-2"
           >
             <FaCalendarAlt size={20} /> Calendar
           </Link>
         </div>
 
         {/* Stats Card */}
-        <div className="bg-white rounded-2xl p-4 shadow-md border border-gray-100 text-center hover:shadow-xl transition-all">
-          <h2 className="font-bold text-lg mb-2 text-purple-700">Tasks Summary</h2>
+        <div className="bg-[#e6e6e6] rounded-2xl p-4 shadow-md border border-[#888] text-center transition-all">
+          <h2 className="font-bold text-lg mb-2">Tasks Summary</h2>
           <div className="flex justify-around text-sm text-gray-600">
             <p>Total: <span className="font-semibold">{totalTasks}</span></p>
             <p>Completed: <span className="font-semibold">{completedTasks}</span></p>
@@ -70,8 +70,8 @@ const Home = () => {
         </div>
 
         {/* Upcoming Reminders */}
-        <div className="bg-white rounded-2xl p-4 shadow-md border border-gray-100 hover:shadow-xl transition-all">
-          <h2 className="font-semibold mb-2 text-center text-purple-700">Upcoming Reminders</h2>
+        <div className="bg-[#e6e6e6] rounded-2xl p-4 shadow-md border border-[#888] transition-all">
+          <h2 className="font-semibold mb-2 text-center">Upcoming Reminders</h2>
           {upcoming.length === 0 ? (
             <p className="text-gray-400 text-sm text-center">No upcoming reminders</p>
           ) : (
@@ -95,7 +95,7 @@ const Home = () => {
         </div>
 
         {/* Quote Card */}
-        <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-4 rounded-2xl shadow-md text-center italic text-gray-700 hover:shadow-lg transition-all">
+        <div className="bg-[#e6e6e6] border border-[#888] p-4 rounded-2xl shadow-md text-center italic text-gray-700 transition-all">
           "Focus on being productive instead of busy."
         </div>
       </main>

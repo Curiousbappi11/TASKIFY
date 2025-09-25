@@ -3,12 +3,14 @@ import ReminderHandler from "./Components/ReminderHandler";
 import ReminderPopup from "./Components/ReminderPopup";
 import { useSelector, useDispatch } from 'react-redux';
 import { MenuToggle } from './features/uiSlice';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 import GoogleAuth from './Components/GoogleAuth';
 // import './App.css'
 
 function App() {
 
+  const navigate = useNavigate();
+  
   const isMenuToggle = useSelector((state) => state.ui.isMenuToggle);
   const dispatch = useDispatch();
 
@@ -51,7 +53,7 @@ function App() {
 
               <button
                 type='button'
-                onClick={() => window.location.href = '/'}
+                onClick={() => navigate('/')}
                 className='px-18 py-1 border border-[#333] text-[#333] font-extrabold text-2xl rounded-lg hover:text-[#4a1aa2] hover:bg-[#e5cfe2] transition-colors'
               >
                 Taskify

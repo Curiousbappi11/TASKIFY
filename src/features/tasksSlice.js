@@ -3,7 +3,11 @@ import { db } from '../firebase/firebase';
 import { collection, getDocs, setDoc, doc, deleteDoc } from 'firebase/firestore';
 
 const initialState = {
-  taskList: [],
+  taskList: JSON.parse(localStorage.getItem("tasks")) || [],
+};
+
+const saveToLocalStorage = (tasks) => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
 const tasksSlice = createSlice({
@@ -17,13 +21,13 @@ const tasksSlice = createSlice({
         text: action.payload,
         completed: false,
       });
+      saveToLocalStorage(state.taskList);
     },
 
     checkTask: (state, action) => {
       const task = state.taskList.find(t => t.id === action.payload);
-      if (task) {
-        task.completed = !task.completed;
-      }
+      if (task) task.completed = !task.completed;
+      saveToLocalStorage(state.taskList);
     },
 
     editTask: (state, action) => {
@@ -33,10 +37,12 @@ const tasksSlice = createSlice({
         task.text = newText;
         task.completed = completed;
       }
+      saveToLocalStorage(state.taskList);
     },
 
     deleteTask: (state, action) => {
       state.taskList = state.taskList.filter(t => t.id !== action.payload);
+      saveToLocalStorage(state.taskList);
     },
 
     // =================== Firebase Actions ===================
@@ -45,30 +51,34 @@ const tasksSlice = createSlice({
       const { text, uid } = action.payload;
       const newTask = { id: Date.now(), text, completed: false };
       state.taskList.push(newTask);
+      saveToLocalStorage(state.taskList); // 🔥 mirror locally
       setDoc(doc(db, 'users', uid, 'tasks', `${newTask.id}`), newTask);
     },
-
+    
     toggleTaskFirebase: (state, action) => {
       const { id, uid } = action.payload;
       const task = state.taskList.find(t => t.id === id);
       if (task) {
         task.completed = !task.completed;
+        saveToLocalStorage(state.taskList);
         setDoc(doc(db, 'users', uid, 'tasks', `${id}`), task);
       }
     },
-
+    
     editTaskFirebase: (state, action) => {
       const { id, newText, uid } = action.payload;
       const task = state.taskList.find(t => t.id === id);
       if (task) {
         task.text = newText;
+        saveToLocalStorage(state.taskList);
         setDoc(doc(db, 'users', uid, 'tasks', `${id}`), task);
       }
     },
-
+    
     deleteTaskFirebase: (state, action) => {
       const { id, uid } = action.payload;
       state.taskList = state.taskList.filter(t => t.id !== id);
+      saveToLocalStorage(state.taskList);
       deleteDoc(doc(db, 'users', uid, 'tasks', `${id}`));
     },
 
