@@ -17,7 +17,7 @@ function GoogleAuth() {
         <>
           <button
             onClick={logout}
-            className="border hover:bg-red-300 transition-colors text-[#333] px-2 py-1 rounded-lg text-[0.1rem] font-medium"
+            className="border hover:bg-red-300 transition-colors text-[#333] px-2 py-1 rounded-lg text-[0.7rem] font-medium"
           >
             Logout
           </button>
