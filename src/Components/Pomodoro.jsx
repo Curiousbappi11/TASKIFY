@@ -94,10 +94,10 @@ function Pomodoro() {
       </div>
 
       {/* Custom Work / Break Inputs */}
-      <div className="flex gap-6 mt-4 items-end">
+      <div className="flex gap-4 mt-4 items-end">
         {/* Work */}
         <div className="flex flex-col items-center">
-          <label className="block text-sm font-semibold mb-1">Work (min)</label>
+          <label className="block text-[0.8rem] font-semibold mb-1">Work (min)</label>
           <input
             type="number"
             min="0"
@@ -106,13 +106,13 @@ function Pomodoro() {
             onBlur={() => {
               if (customWork === "" || isNaN(customWork)) dispatch(setCustomWork("0"));
             }}
-            className="border-2 border-purple-400 focus:border-purple-600 focus:ring-1 focus:ring-purple-300 rounded-lg px-3 py-1 w-24 text-center font-semibold"
+            className="border-2 border-purple-400 focus:border-purple-600 focus:ring-1 focus:ring-purple-300 rounded-lg px-3 py-1 w-22 text-center font-semibold"
           />
         </div>
 
         {/* Break */}
         <div className="flex flex-col items-center">
-          <label className="block text-sm font-semibold mb-1">Break (min)</label>
+          <label className="block text-[0.8rem] font-semibold mb-1">Break (min)</label>
           <input
             type="number"
             min="0"
@@ -121,7 +121,7 @@ function Pomodoro() {
             onBlur={() => {
               if (customBreak === "" || isNaN(customBreak)) dispatch(setCustomBreak("0"));
             }}
-            className="border-2 border-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-300 rounded-lg px-3 py-1 w-24 text-center font-semibold"
+            className="border-2 border-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-300 rounded-lg px-3 py-1 w-22 text-center font-semibold"
           />
         </div>
 
