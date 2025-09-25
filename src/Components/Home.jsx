@@ -16,7 +16,7 @@ const Home = () => {
   const completedTasks = allReminders.filter((r) => r.triggered).length;
 
   return (
-    <div className="h-screen flex flex-col max-w-md mx-auto bg-gradient-to-b">
+    <div className="flex flex-col max-w-md mx-auto bg-gradient-to-b">
       {/* Header */}
       <header className="p-4 pt-6 text-center">
         <h1 className="text-4xl font-extrabold text-purple-700 mb-1">Welcome !!</h1>
